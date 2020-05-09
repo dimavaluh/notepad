@@ -1,0 +1,26 @@
+.notepad {
+  margin: 0 auto;
+  padding: 10px;
+}
+.single-note {
+  padding: 10px;
+  border: 1px solid #b7b7b7;
+  border-radius: 4px;
+  margin: 0 0 10px 0;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__title {
+    display: flex;
+    align-items: flex-end;
+  }
+}
+.note-title {
+  font-weight: 800;
+  margin: 0 10px 0 0;
+}
+.note-date {
+  font-size: 0.5rem;
+}
