@@ -2,6 +2,13 @@
   margin: 0 auto;
   padding: 10px;
 }
+.input-adjust {
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  padding: 5px 0;
+  outline: none;
+}
 .single-note {
   padding: 10px;
   border: 1px solid #b7b7b7;
@@ -23,4 +30,35 @@
 }
 .note-date {
   font-size: 0.5rem;
+}
+.note-editor {
+  border: 1px solid #b7b7b7;
+  border-radius: 4px;
+  margin: 0 0 10px 0;
+  padding: 10px;
+  > * {
+    display: block;
+  }
+  &__title {
+    @extend .input-adjust;
+    font-weight: 700;
+  }
+  &__text {
+    @extend .input-adjust;
+    height: 100px;
+    resize: none;
+  }
+  &__submit {
+    margin-left: auto;
+    border: none;
+    background-color: #7084ff;
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    box-shadow: 2px 2px 4px #8d8d8d;
+  }
 }
