@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NotesList from "./Notes/NotesList";
 import Context from "./context";
 import AddNote from "./Notes/AddNote";
@@ -7,27 +7,43 @@ import "normalize.css";
 import "./App.scss";
 
 function App() {
-  const [notes, setNotes] = React.useState([
-    { id: 1, title: "Some title 1", text: "Some text 1", date: 1589052641406 },
-    { id: 2, title: "Some title 2", text: "Some text 2", date: 1589052641406 },
-    { id: 3, title: "Some title 3", text: "Some text 3", date: 1589052641406 },
-  ]);
+  const [notes, setNotes] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
-  function addNote(title, text) {
-    setNotes(
-      notes.concat([
-        {
-          id: Date.now(),
-          title,
-          text,
-          date: Date.now(),
-        },
-      ])
-    );
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json())
+      .then((res) => {
+        setNotes(res.slice(0, 5));
+        setLoading(false);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
+  function addNote(title, body) {
+    const newNote = {
+      id: Date.now(),
+      title,
+      body,
+      date: Date.now(),
+    };
+    setNotes(notes.concat([newNote]));
+    fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      body: JSON.stringify(newNote),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      });
   }
 
   function removeNote(id) {
     setNotes(notes.filter((note) => note.id !== id));
+    fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
+      method: "DELETE",
+    });
   }
 
   return (
@@ -35,7 +51,13 @@ function App() {
       <div className='notepad'>
         <h1>Notepad</h1>
         <AddNote onCreate={addNote} />
-        {notes.length ? <NotesList notes={notes} /> : <p>No notes yet</p>}
+        {notes.length ? (
+          <NotesList notes={notes} />
+        ) : loading ? (
+          <p>Loading</p>
+        ) : (
+          <p>No notes yet</p>
+        )}
       </div>
     </Context.Provider>
   );

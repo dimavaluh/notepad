@@ -3,26 +3,28 @@ import AddIcon from "@material-ui/icons/Add";
 
 function AddNote({ onCreate }) {
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [body, setBody] = useState("");
 
   function submitHandler(event) {
     event.preventDefault();
-    if (title.trim() && text.trim()) {
-      onCreate(title, text);
+    if (title.trim() && body.trim()) {
+      onCreate(title, body);
       setTitle("");
+      setBody("");
     }
   }
+
   return (
     <form className='note-editor' onSubmit={submitHandler}>
       <input
-        title={title}
+        value={title}
         onChange={(event) => setTitle(event.target.value)}
         className='note-editor__title'
         placeholder='Title'
       />
       <textarea
-        text={text}
-        onChange={(event) => setText(event.target.value)}
+        value={body}
+        onChange={(event) => setBody(event.target.value)}
         className='note-editor__text'
         placeholder='Add some text here'
       ></textarea>

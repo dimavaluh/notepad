@@ -23,6 +23,11 @@
     display: flex;
     align-items: flex-end;
   }
+  &__controls {
+    span {
+      cursor: pointer;
+    }
+  }
 }
 .note-title {
   font-weight: 800;
