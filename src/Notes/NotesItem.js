@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import Context from "../context";
-import CreateIcon from "@material-ui/icons/Create";
-import DeleteIcon from "@material-ui/icons/Delete";
+import CloseIcon from "@material-ui/icons/Close";
 
 function NotesItem({ note }) {
   const { removeNote } = useContext(Context);
@@ -21,8 +20,7 @@ function NotesItem({ note }) {
         </div>
         <div className='single-note__controls'>
           <span onClick={removeNote.bind(null, note.id)}>
-            {/* <DeleteIcon fontSize='small' /> */}
-            &times;
+            <CloseIcon fontSize='small' />
           </span>
         </div>
       </div>

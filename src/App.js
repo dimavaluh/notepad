@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import NotesList from "./Notes/NotesList";
 import Context from "./context";
 import AddNote from "./Notes/AddNote";
@@ -10,6 +10,14 @@ function App() {
   const [notes, setNotes] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
 
+  const [isSticky, setSticky] = useState(false);
+  const ref = useRef(null);
+  const handleScroll = () => {
+    if (ref.current) {
+      setSticky(ref.current.getBoundingClientRect().top <= 11);
+    }
+  };
+
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => response.json())
@@ -18,6 +26,11 @@ function App() {
         setLoading(false);
       })
       .catch((error) => console.log(error));
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", () => handleScroll);
+    };
   }, []);
 
   function addNote(title, body) {
@@ -49,15 +62,22 @@ function App() {
   return (
     <Context.Provider value={{ removeNote }}>
       <div className='notepad'>
-        <h1>Notepad</h1>
-        <AddNote onCreate={addNote} />
-        {notes.length ? (
-          <NotesList notes={notes} />
-        ) : loading ? (
-          <p>Loading</p>
-        ) : (
-          <p>No notes yet</p>
-        )}
+        <h1 className='notepad__name'>Notepad</h1>
+        <div
+          ref={ref}
+          className={`note-editor-wrapper ${isSticky ? "sticky" : ""}`}
+        >
+          <AddNote onCreate={addNote} />
+        </div>
+        <div className='notes-list'>
+          {notes.length ? (
+            <NotesList notes={notes} />
+          ) : loading ? (
+            <p>Loading</p>
+          ) : (
+            <p>No notes yet</p>
+          )}
+        </div>
       </div>
     </Context.Provider>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AddIcon from "@material-ui/icons/Add";
+import DoneIcon from "@material-ui/icons/Done";
 
 function AddNote({ onCreate }) {
   const [title, setTitle] = useState("");
@@ -29,7 +29,7 @@ function AddNote({ onCreate }) {
         placeholder='Add some text here'
       ></textarea>
       <button className='note-editor__submit' type='submit'>
-        <AddIcon style={{ color: "#fff" }} />
+        <DoneIcon style={{ color: "#000" }} />
       </button>
     </form>
   );

@@ -1,7 +1,20 @@
+$border-color: #e2e2e2;
+$backgroundColor: #f5f5f5;
+
+body {
+  background-color: $backgroundColor;
+  font-family: "Zilla Slab", serif;
+  font-weight: 300;
+}
 .notepad {
   margin: 0 auto;
-  padding: 10px;
+  //padding: 10px;
+  &__name {
+    text-align: center;
+    margin: 10px 10px 0;
+  }
 }
+
 .input-adjust {
   box-sizing: border-box;
   width: 100%;
@@ -9,19 +22,21 @@
   padding: 5px 0;
   outline: none;
 }
-.single-note {
+.notes-list {
   padding: 10px;
-  border: 1px solid #b7b7b7;
-  border-radius: 4px;
+}
+.single-note {
+  background-color: #fff;
+  padding: 10px;
+  border: 1px solid $border-color;
   margin: 0 0 10px 0;
   &__header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
   }
   &__title {
-    display: flex;
-    align-items: flex-end;
+    margin-right: 10px;
   }
   &__controls {
     span {
@@ -31,32 +46,55 @@
 }
 .note-title {
   font-weight: 800;
-  margin: 0 10px 0 0;
+  margin: 0 0 5px 0;
 }
 .note-date {
   font-size: 0.5rem;
+  margin: 0 0 10px 0;
+}
+.note-editor-wrapper {
+  position: sticky;
+  top: 0px;
+  padding: 10px;
+}
+.note-editor-wrapper.sticky {
+  background-color: $backgroundColor;
+  box-shadow: 0 3px 10px 0px #dadada;
+  .note-editor {
+    &__submit {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+    &__text {
+      height: 60px;
+    }
+  }
 }
 .note-editor {
-  border: 1px solid #b7b7b7;
-  border-radius: 4px;
-  margin: 0 0 10px 0;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid $border-color;
   padding: 10px;
   > * {
     display: block;
   }
   &__title {
     @extend .input-adjust;
-    font-weight: 700;
+    font-weight: 500;
   }
   &__text {
+    transition: 0.2s;
     @extend .input-adjust;
+    font-weight: 300;
     height: 100px;
     resize: none;
   }
   &__submit {
+    transition: 0.2s;
     margin-left: auto;
     border: none;
-    background-color: #7084ff;
+    background-color: $border-color;
     width: 40px;
     height: 40px;
     border-radius: 25px;
@@ -64,6 +102,5 @@
     align-items: center;
     justify-content: center;
     outline: none;
-    box-shadow: 2px 2px 4px #8d8d8d;
   }
 }
